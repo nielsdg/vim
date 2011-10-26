@@ -1,7 +1,7 @@
 set tw=0
-set ts=4
-set sw=4
-set noet
+set ts=3
+set sw=3
+set et
 set nowrap
 set cindent
 set cinoptions=(0,u0,U0
