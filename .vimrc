@@ -84,8 +84,9 @@ set hlsearch
 
 " Use 256 colormode jungle scheme
 set t_Co=256
-set background=light
-colorscheme solarized
+"set background=light
+"colorscheme solarized
+colorscheme jungle
 
 " Map make and clean
 map <F7> <Esc>:!clear && make<CR>
