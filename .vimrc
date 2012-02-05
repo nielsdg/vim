@@ -86,7 +86,7 @@ set hlsearch
 set t_Co=256
 "set background=light
 "colorscheme solarized
-colorscheme jungle
+colorscheme default
 
 " Map make and clean
 map <F7> <Esc>:!clear && make<CR>
