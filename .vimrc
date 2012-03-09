@@ -86,7 +86,10 @@ set hlsearch
 set t_Co=256
 "set background=light
 "colorscheme solarized
-colorscheme default
+"colorscheme default
+set background=light
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " Map make and clean
 map <F7> <Esc>:!clear && make<CR>
