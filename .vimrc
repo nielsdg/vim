@@ -84,9 +84,6 @@ set hlsearch
 
 " Use 256 colormode jungle scheme
 set t_Co=256
-"set background=light
-"colorscheme solarized
-"colorscheme default
 set background=light
 let g:solarized_termcolors=256
 colorscheme solarized
