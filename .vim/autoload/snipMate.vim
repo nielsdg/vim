@@ -22,7 +22,7 @@ fun! SplitFilename(...)
 	let words = []
 	let word = ''
 	for i in range(0,len(filename)-1)
-		if toupper(filename[i]) == filename[i] || filename[i] == '-'
+		if ((filename[i] < '0' || filename[i] > '9') && toupper(filename[i]) == filename[i]) || filename[i] == '-'
 			let words += [word]
 			let word = ''
 		endif
