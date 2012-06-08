@@ -586,7 +586,39 @@ snippet cobj
 	static void
 	$3_finalize (GObject *object)
 	{
+		$2Private *priv;
+
+		priv = `NS_NAME()`_`TYPE_NAME()`(object)->priv;
+
 		G_OBJECT_CLASS($3_parent_class)->finalize(object);
+	}
+
+	static void
+	`FuncPrefix()`_get_property (GObject    *object,
+	`FuncSpace("get_property")`  guint       prop_id,
+	`FuncSpace("get_property")`  GValue     *value,
+	`FuncSpace("get_property")`  GParamSpec *pspec)
+	{
+		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+
+		switch (prop_id) {
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+		}
+	}
+
+	static void
+	`FuncPrefix()`_set_property (GObject      *object,
+	`FuncSpace("get_property")`  guint         prop_id,
+	`FuncSpace("get_property")`  const GValue *value,
+	`FuncSpace("get_property")`  GParamSpec   *pspec)
+	{
+		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+
+		switch (prop_id) {
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+		}
 	}
 
 	static void
@@ -596,6 +628,8 @@ snippet cobj
 
 		object_class = G_OBJECT_CLASS(klass);
 		object_class->finalize = $3_finalize;
+		object_class->get_property = `FuncPrefix()`_get_property;
+		object_class->set_property = `FuncPrefix()`_set_property;
 		g_type_class_add_private(object_class, sizeof($2Private));
 	}
 
