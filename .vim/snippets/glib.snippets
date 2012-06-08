@@ -22,12 +22,6 @@ snippet cref
 		volatile gint ref_count;${5}
 	};
 
-	/**
-	 * $3_dispose:
-	 * @$4: A #$2.
-	 *
-	 * Cleans up the #$2 instance and frees any allocated resources.
-	 */
 	static void
 	$3_dispose ($2 *$4) /* IN */
 	{
@@ -61,7 +55,6 @@ snippet cref
 	 * Atomically increments the reference count of @$4 by one.
 	 *
 	 * Returns: A reference to @$4.
-	 * Side effects: None.
 	 */
 	$2*
 	$3_ref ($2 *$4) /* IN */
@@ -81,9 +74,6 @@ snippet cref
 	 * Atomically decrements the reference count of @$4 by one.  When the
 	 * reference count reaches zero, the structure will be destroyed and
 	 * freed.
-	 *
-	 * Side effects: The structure will be freed when the reference count
-	 *   reaches zero.
 	 */
 	void
 	$3_unref ($2 *$4) /* IN */
@@ -593,25 +583,12 @@ snippet cobj
 
 	static GParamSpec *gParamSpecs[LAST_PROP];
 
-	/**
-	 * $3_finalize:
-	 * @object: (in): A #$2.
-	 *
-	 * Finalizer for a #$2 instance.  Frees any resources held by
-	 * the instance.
-	 */
 	static void
 	$3_finalize (GObject *object)
 	{
 		G_OBJECT_CLASS($3_parent_class)->finalize(object);
 	}
 
-	/**
-	 * $3_class_init:
-	 * @klass: (in): A #$2Class.
-	 *
-	 * Initializes the #$2Class and prepares the vtable.
-	 */
 	static void
 	$3_class_init ($2Class *klass)
 	{
@@ -622,12 +599,6 @@ snippet cobj
 		g_type_class_add_private(object_class, sizeof($2Private));
 	}
 
-	/**
-	 * $3_init:
-	 * @$5: (in): A #$2.
-	 *
-	 * Initializes the newly created #$2 instance.
-	 */
 	static void
 	$3_init ($2 *${5:`InstanceName("$1")`})
 	{
