@@ -308,6 +308,39 @@ snippet glibmain
 
 		return EXIT_SUCCESS;
 	}
+snippet stra
+	/**
+	 * `FuncPrefix()`_get_${1:name}:
+	 * @`InstanceName()`: (in): A #`ClassName()`.
+	 *
+	 * Gets the "${2:name}" property.
+	 *
+	 * Returns: A string which should not be modified or freed.
+	 */
+	const gchar *
+	`FuncPrefix()`_get_$1 (`ClassName()` *`InstanceName()`)
+	{
+		g_return_val_if_fail(`NS_NAME()`_IS_`CLASS_NAME()`(`InstanceName()`), NULL);
+		return `InstanceName()`->priv->$1;
+	}
+
+	/**
+	 * `FuncPrefix()`_set_$1:
+	 * @`InstanceName()`: (in): A #`ClassName()`.
+	 * @$1: (in): A string.
+	 *
+	 * Sets the "$2" property.
+	 */
+	void
+	`FuncPrefix()`_set_$1 (`ClassName()` *`InstanceName()`,
+	`FuncSpace("_set_")` `FuncSpace($1)` const gchar *$1)
+	{
+		g_return_if_fail(`NS_NAME()`_IS_`CLASS_NAME()`(`InstanceName()`));
+		g_free(`InstanceName()`->priv->$1);
+		`InstanceName()`->priv->$1 = g_strdup($1);
+		g_object_notify_by_pspec(G_OBJECT($1), gParamSpecs[PROP_${3:NAME}]);
+	}
+	${4}
 snippet setprop
 	/**
 	 * `FuncPrefix()`_set_property:
