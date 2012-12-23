@@ -338,7 +338,7 @@ snippet stra
 		g_return_if_fail(`NS_NAME()`_IS_`TYPE_NAME("$1")`(`InstanceName()`));
 		g_free(`InstanceName()`->priv->$1);
 		`InstanceName()`->priv->$1 = g_strdup($1);
-		g_object_notify_by_pspec(G_OBJECT($1), gParamSpecs[PROP_${3:NAME}]);
+		g_object_notify_by_pspec(G_OBJECT(`InstanceName()`), gParamSpecs[PROP_${3:NAME}]);
 	}
 	${4}
 snippet setprop
