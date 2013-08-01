@@ -124,7 +124,7 @@ snippet doc
 snippet d
 	* @${1:xxx}: (${2:in}): A #${3}
 snippet gpl
-	/* ${1:`expand('%:t')`}
+	/* ${1:`expand('%:t')`}:
 	 *
 	 * Copyright (C) ${2:`system('date +%Y')`} ${3:`system('git config user.name')`} <${4:`system('git config user.email')`}>
 	 * 
@@ -143,7 +143,7 @@ snippet gpl
 	 */
 	${5}
 snippet lgpl
-	/* ${1:`expand('%:t')`}
+	/* ${1:`expand('%:t')`}:
 	 *
 	 * Copyright (C) ${2:`system('date +%Y')`} ${3:`system('git config user.name')`} <${4:`system('git config user.email')`}>
 	 *
@@ -162,7 +162,7 @@ snippet lgpl
 	 */
 	${5}
 snippet agpl
-	/* ${1:`expand('%:t')`}
+	/* ${1:`expand('%:t')`}:
 	 *
 	 * Copyright (C) ${2:`system('date +%Y')`} ${3:`system('git config user.name')`} <${4:`system('git config user.email')`}>
 	 *
