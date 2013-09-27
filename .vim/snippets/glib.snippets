@@ -832,7 +832,7 @@ snippet prop
 		                    _("${4:Name}"),
 		                    _("${5:Name}"),
 		                    ${6}
-		                    ${7:G_PARAM_READWRITE});
+		                    ${7:G_PARAM_READWRITE} | G_PARAM_STATIC_STRINGS);
 	g_object_class_install_property(object_class, PROP_$1,
 	                                gParamSpecs[PROP_$1]);
 snippet f
