@@ -601,8 +601,6 @@ snippet cobj
 
 	#include "${1:`HeaderName("$1")`}"
 
-	G_DEFINE_TYPE (${2:`ClassName()`}, ${3:`FuncPrefix()`}, ${4:G_TYPE_OBJECT})
-
 	struct _$2Private
 	{
 		gpointer dummy;
@@ -613,6 +611,8 @@ snippet cobj
 		PROP_0,
 		LAST_PROP
 	};
+
+	G_DEFINE_TYPE_WITH_PRIVATE (${2:`ClassName()`}, ${3:`FuncPrefix()`}, ${4:G_TYPE_OBJECT})
 
 	static GParamSpec *gParamSpecs [LAST_PROP];
 
@@ -663,16 +663,12 @@ snippet cobj
 		object_class->finalize = $3_finalize;
 		object_class->get_property = `FuncPrefix()`_get_property;
 		object_class->set_property = `FuncPrefix()`_set_property;
-		g_type_class_add_private (object_class, sizeof ($2Private));
 	}
 
 	static void
 	$3_init ($2 *${5:`InstanceName("$1")`})
 	{
-		$5->priv =
-			G_TYPE_INSTANCE_GET_PRIVATE ($5,
-			                             `NS_NAME()`_TYPE_`TYPE_NAME()`,
-			                             `ClassName()`Private);
+		$5->priv = `FuncPrefix()`_get_instance_private ($5);
 	}
 snippet config
 	#ifdef HAVE_CONFIG_H
@@ -768,9 +764,9 @@ snippet method
 		priv = $5->priv;${8}
 	}
 snippet fail
-	g_return_if_fail(${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")`(`InstanceName("$1")`)});${2}
+	g_return_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (`InstanceName("$1")`)});${2}
 snippet vfail
-	g_return_val_if_fail(${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")`(`InstanceName("$1")`)}, ${2:NULL});${3}
+	g_return_val_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (`InstanceName("$1")`)}, ${2:NULL});${3}
 snippet gd
 	gdouble 
 snippet bo
@@ -827,14 +823,15 @@ snippet strd
 snippet str
 	g_strdup(${1});${2}
 snippet prop
-	gParamSpecs[PROP_${1:NAME}] =
-		g_param_spec_${2:object}("${3:name}",
-		                    _("${4:Name}"),
-		                    _("${5:Name}"),
-		                    ${6}
-		                    (G_PARAM_${7:READWRITE} | G_PARAM_STATIC_STRINGS));
-	g_object_class_install_property(object_class, PROP_$1,
-	                                gParamSpecs[PROP_$1]);
+	gParamSpecs [PROP_${1:NAME}] =
+		g_param_spec_${2:object} ("${3:name}",
+		                     _("${4:Name}"),
+		                     _("${5:Name}"),
+		                     ${6}
+		                     (G_PARAM_${7:READWRITE} |
+		                      G_PARAM_STATIC_STRINGS));
+	g_object_class_install_property (object_class, PROP_$1,
+	                                 gParamSpecs [PROP_$1]);
 snippet f
 	`FuncPrefix("$1")`_
 snippet i
