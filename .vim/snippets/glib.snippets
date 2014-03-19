@@ -601,7 +601,7 @@ snippet cobj
 
 	#include "${1:`HeaderName("$1")`}"
 
-	G_DEFINE_TYPE(${2:`ClassName()`}, ${3:`FuncPrefix()`}, ${4:G_TYPE_OBJECT})
+	G_DEFINE_TYPE (${2:`ClassName()`}, ${3:`FuncPrefix()`}, ${4:G_TYPE_OBJECT})
 
 	struct _$2Private
 	{
@@ -614,16 +614,16 @@ snippet cobj
 		LAST_PROP
 	};
 
-	static GParamSpec *gParamSpecs[LAST_PROP];
+	static GParamSpec *gParamSpecs [LAST_PROP];
 
 	static void
 	$3_finalize (GObject *object)
 	{
 		$2Private *priv;
 
-		priv = `NS_NAME()`_`TYPE_NAME()`(object)->priv;
+		priv = `NS_NAME()`_`TYPE_NAME()` (object)->priv;
 
-		G_OBJECT_CLASS($3_parent_class)->finalize(object);
+		G_OBJECT_CLASS ($3_parent_class)->finalize (object);
 	}
 
 	static void
@@ -632,11 +632,11 @@ snippet cobj
 	`FuncSpace("get_property")`  GValue     *value,
 	`FuncSpace("get_property")`  GParamSpec *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+		`ClassName()` *`InstanceName()` = `CLASS_NAME()` (object);
 
 		switch (prop_id) {
 		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		}
 	}
 
@@ -646,11 +646,11 @@ snippet cobj
 	`FuncSpace("get_property")`  const GValue *value,
 	`FuncSpace("get_property")`  GParamSpec   *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+		`ClassName()` *`InstanceName()` = `CLASS_NAME()` (object);
 
 		switch (prop_id) {
 		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		}
 	}
 
@@ -659,20 +659,20 @@ snippet cobj
 	{
 		GObjectClass *object_class;
 
-		object_class = G_OBJECT_CLASS(klass);
+		object_class = G_OBJECT_CLASS (klass);
 		object_class->finalize = $3_finalize;
 		object_class->get_property = `FuncPrefix()`_get_property;
 		object_class->set_property = `FuncPrefix()`_set_property;
-		g_type_class_add_private(object_class, sizeof($2Private));
+		g_type_class_add_private (object_class, sizeof ($2Private));
 	}
 
 	static void
 	$3_init ($2 *${5:`InstanceName("$1")`})
 	{
 		$5->priv =
-			G_TYPE_INSTANCE_GET_PRIVATE($5,
-			                            `NS_NAME()`_TYPE_`TYPE_NAME()`,
-			                            `ClassName()`Private);
+			G_TYPE_INSTANCE_GET_PRIVATE ($5,
+			                             `NS_NAME()`_TYPE_`TYPE_NAME()`,
+			                             `ClassName()`Private);
 	}
 snippet config
 	#ifdef HAVE_CONFIG_H
