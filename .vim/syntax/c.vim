@@ -1,6 +1,6 @@
 set tw=0
-set ts=3
-set sw=3
+set ts=2
+set sw=2
 set et
 set nowrap
 set cindent

@@ -147,18 +147,18 @@ snippet lgpl
 	 *
 	 * Copyright (C) ${2:`system('date +%Y')`} ${3:`system('git config user.name')`} <${4:`system('git config user.email')`}>
 	 *
-	 * This file is free software; you can redistribute it and/or
-	 * modify it under the terms of the GNU Lesser General Public
-	 * License as published by the Free Software Foundation; either
-	 * version 2.1 of the License, or (at your option) any later version.
-	 * 
-	 * This file is distributed in the hope that it will be useful,
-	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	 * Lesser General Public License for more details.
+	 * This file is free software; you can redistribute it and/or modify it under
+	 * the terms of the GNU Lesser General Public License as published by the Free
+	 * Software Foundation; either version 3 of the License, or (at your option)
+	 * any later version.
 	 *
-	 * You should have received a copy of the GNU General Public License
-	 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 * This file is distributed in the hope that it will be useful, but WITHOUT
+	 * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+	 * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+	 * License for more details.
+	 *
+	 * You should have received a copy of the GNU General Public License along
+	 * with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 */
 	${5}
 snippet agpl
@@ -338,74 +338,47 @@ snippet stra
 		g_return_if_fail(`NS_NAME()`_IS_`TYPE_NAME("$1")`(`InstanceName()`));
 		g_free(`InstanceName()`->priv->$1);
 		`InstanceName()`->priv->$1 = g_strdup($1);
-		g_object_notify_by_pspec(G_OBJECT(`InstanceName()`), gParamSpecs[PROP_${3:NAME}]);
+		g_object_notify_by_pspec(G_OBJECT(`InstanceName()`), properties[PROP_${3:NAME}]);
 	}
 	${4}
 snippet setprop
-	/**
-	 * `FuncPrefix()`_set_property:
-	 * @object: (in): A #GObject.
-	 * @prop_id: (in): The property identifier.
-	 * @value: (in): The given property.
-	 * @pspec: (in): A #ParamSpec.
-	 *
-	 * Set a given #GObject property.
-	 */
 	static void
 	`FuncPrefix()`_set_property (GObject      *object,
 	`FuncSpace("get_property")`  guint         prop_id,
 	`FuncSpace("get_property")`  const GValue *value,
 	`FuncSpace("get_property")`  GParamSpec   *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+		`ClassName()` *self = `CLASS_NAME()` (object);
 
-		switch (prop_id) {${1}
-		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-		}
+		switch (prop_id)
+			{
+			default:
+				G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+			}
 	}
 snippet getprop
-	/**
-	 * `FuncPrefix()`_get_property:
-	 * @object: (in): A #GObject.
-	 * @prop_id: (in): The property identifier.
-	 * @value: (out): The given property.
-	 * @pspec: (in): A #ParamSpec.
-	 *
-	 * Get a given #GObject property.
-	 */
 	static void
 	`FuncPrefix()`_get_property (GObject    *object,
 	`FuncSpace("get_property")`  guint       prop_id,
 	`FuncSpace("get_property")`  GValue     *value,
 	`FuncSpace("get_property")`  GParamSpec *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()`(object);
+		`ClassName()` *self = `CLASS_NAME()` (object);
 
-		switch (prop_id) {${1}
-		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-		}
+		switch (prop_id)
+			{
+			default:
+				G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+			}
 	}
 snippet props
 	object_class->get_property = `FuncPrefix()`_get_property;
 	object_class->set_property = `FuncPrefix()`_set_property;${1}
 snippet dispose
-	/**
-	 * $1_dispose:
-	 * @object: (in): A #GObject.
-	 *
-	 * Dispose callback for @object.  This method releases references held
-	 * by the #GObject instance.
-	 *
-	 * Side effects: Plenty.
-	 */
 	static void
 	${1:`FuncPrefix("$1")`}_dispose (GObject *object)
 	{
-		ENTRY;${2}
-		G_OBJECT_CLASS($1_parent_class)->dispose(object);
-		EXIT;
+		G_OBJECT_CLASS ($1_parent_class)->dispose (object);
 	}
 snippet quark
 	/**
@@ -414,7 +387,6 @@ snippet quark
 	 * Retrieves the "$2" error #GQuark.
 	 *
 	 * Returns: A #GQuark.
-	 * Side effects: A #GQuark may be registered on first call.
 	 */
 	GQuark
 	${1:`FuncPrefix("$1")`}_error_quark (void)
@@ -601,20 +573,20 @@ snippet cobj
 
 	#include "${1:`HeaderName("$1")`}"
 
-	struct _$2Private
+	typedef struct
 	{
 		gpointer dummy;
-	};
+	} _$2Private;
 
 	enum
 	{
 		PROP_0,
-		LAST_PROP
+		N_PROPS
 	};
 
 	G_DEFINE_TYPE_WITH_PRIVATE (${2:`ClassName()`}, ${3:`FuncPrefix()`}, ${4:G_TYPE_OBJECT})
 
-	static GParamSpec *gParamSpecs [LAST_PROP];
+	static GParamSpec *properties [N_PROPS];
 
 	static void
 	$3_finalize (GObject *object)
@@ -632,12 +604,13 @@ snippet cobj
 	`FuncSpace("get_property")`  GValue     *value,
 	`FuncSpace("get_property")`  GParamSpec *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()` (object);
+		`ClassName()` *self = `CLASS_NAME()` (object);
 
-		switch (prop_id) {
-		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-		}
+		switch (prop_id)
+			{
+			default:
+				G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+			}
 	}
 
 	static void
@@ -646,29 +619,28 @@ snippet cobj
 	`FuncSpace("get_property")`  const GValue *value,
 	`FuncSpace("get_property")`  GParamSpec   *pspec)
 	{
-		`ClassName()` *`InstanceName()` = `CLASS_NAME()` (object);
+		`ClassName()` *self = `CLASS_NAME()` (object);
 
-		switch (prop_id) {
-		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-		}
+		switch (prop_id)
+			{
+			default:
+				G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+			}
 	}
 
 	static void
 	$3_class_init ($2Class *klass)
 	{
-		GObjectClass *object_class;
+		GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-		object_class = G_OBJECT_CLASS (klass);
 		object_class->finalize = $3_finalize;
 		object_class->get_property = `FuncPrefix()`_get_property;
 		object_class->set_property = `FuncPrefix()`_set_property;
 	}
 
 	static void
-	$3_init ($2 *${5:`InstanceName("$1")`})
+	$3_init ($2 *${5:self})
 	{
-		$5->priv = `FuncPrefix()`_get_instance_private ($5);
 	}
 snippet config
 	#ifdef HAVE_CONFIG_H
@@ -745,28 +717,17 @@ snippet prepend
 snippet append
 	$1 = g_list_append(${1:list}, ${2:data});${3}
 snippet method
-	/**
-	 * $2_$3:
-	 * @$5: (in): A #$4.
-	 *
-	 * XXX
-	 *
-	 * Returns: None.
-	 * Side effects: None.
-	 */
 	${1:static void}
-	${2:`FuncPrefix("$1")`}_${3:func_name} (${4:`ClassName("$1")`} *${5:`InstanceName("$1")`}${6:)} ${7}
+	${2:`FuncPrefix("$1")`}_${3:func_name} (${4:`ClassName("$1")`} *self) ${7}
 	{
-		$4Private *priv;
+		$4Private *priv = $2_get_instance_private (self);
 
-		g_return_if_fail(`NS_NAME("$1")`_IS_`TYPE_NAME("$1")`($5));
-
-		priv = $5->priv;${8}
+		g_return_if_fail (`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (self));
 	}
 snippet fail
-	g_return_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (`InstanceName("$1")`)});${2}
+	g_return_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (self)});${2}
 snippet vfail
-	g_return_val_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (`InstanceName("$1")`)}, ${2:NULL});${3}
+	g_return_val_if_fail (${1:`NS_NAME("$1")`_IS_`TYPE_NAME("$1")` (self)}, ${2:NULL});${3}
 snippet gd
 	gdouble 
 snippet bo
@@ -815,23 +776,23 @@ snippet O
 snippet OUT
 	/* OUT */
 snippet Pr
-	`ClassName("$1")`Private *priv;
+	`ClassName("$1")`Private *priv = `FuncPrefix("$1")`_get_instance_private (self);
 snippet pr
-	`ClassName("$1")`Private *priv;
+	`ClassName("$1")`Private *priv = `FuncPrefix("$1")`_get_instance_private (self);
 snippet strd
 	g_strdup(${1});${2}
 snippet str
 	g_strdup(${1});${2}
 snippet prop
-	gParamSpecs [PROP_${1:NAME}] =
+	properties [PROP_${1:NAME}] =
 		g_param_spec_${2:object} ("${3:name}",
-		                     _("${4:Name}"),
-		                     _("${5:Name}"),
+		                     "${4:Name}",
+		                     "${5:Name}",
 		                     ${6}
 		                     (G_PARAM_${7:READWRITE} |
 		                      G_PARAM_STATIC_STRINGS));
-	g_object_class_install_property (object_class, PROP_$1,
-	                                 gParamSpecs [PROP_$1]);
+
+	g_object_class_install_properties (object_class, N_PROPS, properties);
 snippet f
 	`FuncPrefix("$1")`_
 snippet i
