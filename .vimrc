@@ -59,11 +59,13 @@ autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 au BufRead,BufNewFile *.vala            setfiletype vala
 au BufRead,BufNewFile *.vapi            setfiletype vala
-au! Syntax vala source $VIM/vim73/syntax/cs.vim
+au! Syntax vala source $VIM/vim80/syntax/cs.vim
 
 " Remove trailing whitespace for .c,.h
 autocmd BufWritePre *.c :%s/\s\+$//e
 autocmd BufWritePre *.h :%s/\s\+$//e
+autocmd BufWritePre *.py :%s/\s\+$//e
+autocmd BufWritePre *.m4 :%s/\s\+$//e
 
 " My RPC format
 au BufRead,BufNewFile *.rpc setfiletype rpc
@@ -85,9 +87,10 @@ set hlsearch
 " Use 256 colormode jungle scheme
 set t_Co=256
 set background=dark
+"set background=light
 let g:solarized_termcolors=256
-colorscheme solarized
-"colorscheme jungle
+"colorscheme solarized
+colorscheme jungle
 
 " Map make and clean
 map <F7> <Esc>:!clear && make<CR>

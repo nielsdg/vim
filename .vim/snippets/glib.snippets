@@ -114,12 +114,11 @@ snippet href
 snippet doc
 	/**
 	 * `FuncPrefix("$1")`_${1:func_name}:
-	 * @`InstanceName("$1")`: (in): A #`ClassName("$1")`.
+	 * @self: a #`ClassName("$1")`
 	 *
-	 * ${4:XXX}
+	 * ${4}
 	 *
-	 * Returns: ${2:None.}
-	 * Side effects: ${3:None.}
+	 * Returns: ${2}
 	 */${5}
 snippet d
 	* @${1:xxx}: (${2:in}): A #${3}
@@ -824,3 +823,24 @@ snippet iter
 	for (iter = list; iter; iter = iter->next) {
 		$1
 	}
+snippet adoc
+	/**
+	 * `FuncPrefix("$1")`_${1:func_name}_async:
+	 * @self: a #`ClassName("$1")`
+	 * @cancellable: (nullable): an optional #GCancellable, or %NULL
+	 * @callback: (scope async) (closure user_data): a callback to execute upon completion
+	 * @user_data: the data to pass to @callback function
+	 *
+	 * ${2}
+	 */
+snippet fdoc
+	/**
+	 * `FuncPrefix("$1")`_${1:func_name}_finish:
+	 * @self: a #`ClassName("$1")`
+	 * @result: the #GAsyncResult provided to the callback function
+	 * @error: a location for a #GError, or %NULL
+	 *
+	 * Completes an asynchronous request to `FuncPrefix("$1")`_$1_async().
+	 *
+	 * Returns: ${2:(transfer full): }$0
+	 */
